@@ -16,7 +16,7 @@ theme.typography.h1 = {
   lineHeight: "3rem",
   fontFamily: FontFamily.poppins,
   fontWeight: FontWeights.medium,
-  [theme.breakpoints.down("md")]: {
+  [theme.breakpoints.down("lg")]: {
     fontSize: "1.5rem",
     lineHeight: "2.25rem",
   },

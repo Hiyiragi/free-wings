@@ -1,20 +1,12 @@
-import { Route, Routes } from "react-router-dom";
-
-import Authlayout from "@features/ui/layout/Authlayout";
-import SignupPage from "@pages/Sign-up";
-import HomePage from "@pages/home";
-import LoginPage from "@pages/login";
-import NotFoundPage from "@pages/not-found";
+import { AppRouter } from "@config/routes";
+import { theme } from "@config/styles";
+import { CssBaseline, ThemeProvider } from "@mui/material";
 
 export default function App() {
   return (
-    <Routes>
-      <Route path="/" element={<HomePage />} />
-      <Route element={<Authlayout />}>
-        <Route path="/sign-up" element={<SignupPage />} />
-        <Route path="/login" element={<LoginPage />} />
-      </Route>
-      <Route path="*" element={<NotFoundPage />} />
-    </Routes>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <AppRouter />
+    </ThemeProvider>
   );
 }

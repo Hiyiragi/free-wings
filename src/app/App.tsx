@@ -5,10 +5,10 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 
 import { AppRouter } from "@config/routes";
 import { theme } from "@config/styles";
-import { useAuthStateSubsription } from "@services/firebase";
+import { useAuthStateSubscription } from "@services/firebase";
 
 export default function App() {
-  useAuthStateSubsription();
+  useAuthStateSubscription();
   return (
     <BrowserRouter>
       <ThemeProvider theme={theme}>

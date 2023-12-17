@@ -42,7 +42,7 @@ export const authSlice = createSlice({
       }
     },
   },
-  extraReducers: (builder) => {
+  extraReducers: (builder) =>
     builder
       .addCase(registerUser.pending, (state) => {
         state.status = "loading";
@@ -67,8 +67,7 @@ export const authSlice = createSlice({
       .addCase(loginUser.fulfilled, (state) => {
         state.status = "succeeded";
         state.error = null;
-      });
-  },
+      }),
 });
 
 // Action creators are generated for each case reducer function

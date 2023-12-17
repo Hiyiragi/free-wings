@@ -8,7 +8,7 @@ import {
 import { auth } from "@services/firebase";
 import { mapAuthCodeToMessage } from "@services/firebase/";
 
-export function register(name: string, email: string, password: string) {
+export async function register(name: string, email: string, password: string) {
   return handleAuthError(async () => {
     await createUserWithEmailAndPassword(auth, email, password);
     if (auth.currentUser) {
@@ -19,7 +19,7 @@ export function register(name: string, email: string, password: string) {
   });
 }
 
-export function login(email: string, password: string) {
+export async function login(email: string, password: string) {
   return handleAuthError(async () => {
     await signInWithEmailAndPassword(auth, email, password);
   });

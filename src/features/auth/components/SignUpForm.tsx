@@ -1,9 +1,15 @@
 import { Controller, type SubmitHandler, useForm } from "react-hook-form";
+import { Navigate } from "react-router-dom";
 
 import { Box, Link, Stack, TextField, Typography } from "@mui/material";
 
 import { AppRoutes } from "@config/routes";
 import AppButton from "@features/ui/AppButton";
+import { auth } from "@services/firebase";
+import { useAppDispatch, useAppSelector } from "@store/index";
+
+import { registerUser } from "../store/authActions";
+import { selectUser, setUserName } from "../store/authSlice";
 
 interface FormInput {
   email: string;
@@ -13,15 +19,11 @@ interface FormInput {
 }
 
 export default function SignUpForm() {
-  const { handleSubmit, control } = useForm<FormInput>({
-    defaultValues: {
-      name: "",
-      email: "",
-      password: "",
-      passwordRepeat: "",
-    },
-  });
-  const onSubmit: SubmitHandler<FormInput> = (data) => console.log(data);
+  const { handleSubmit, onSubmit, password, control } = useSignUpForm();
+  const user = useAppSelector(selectUser);
+  if (user) {
+    return <Navigate to={AppRoutes.dashboard} replace />;
+  }
   return (
     <>
       <Box
@@ -98,7 +100,13 @@ export default function SignUpForm() {
         <Controller
           name="passwordRepeat"
           control={control}
-          rules={{ required: "Please confirm your password!" }}
+          rules={{
+            required: "Please confirm your password!",
+            validate: (confirmPassword) =>
+              confirmPassword !== password
+                ? "Password doesn't match!"
+                : undefined,
+          }}
           render={({ field, fieldState }) => (
             <TextField
               margin="normal"
@@ -131,4 +139,33 @@ export default function SignUpForm() {
       </Box>
     </>
   );
+}
+
+function useSignUpForm() {
+  const dispatch = useAppDispatch();
+  const { handleSubmit, control, watch } = useForm<FormInput>({
+    defaultValues: {
+      name: "",
+      email: "",
+      password: "",
+      passwordRepeat: "",
+    },
+  });
+  const password = watch("password");
+  const onSubmit: SubmitHandler<FormInput> = async (data) => {
+    await dispatch(
+      registerUser({
+        name: data.name,
+        password: data.password,
+        email: data.email,
+      }),
+    ).unwrap();
+    dispatch(setUserName(auth.currentUser?.displayName));
+  };
+  return {
+    handleSubmit,
+    onSubmit,
+    password,
+    control,
+  };
 }

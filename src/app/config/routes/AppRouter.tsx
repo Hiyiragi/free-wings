@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 
 import Authlayout from "@features/ui/layout/Authlayout";
+import DashboardPage from "@pages/account/dashboard";
 import HomePage from "@pages/home";
 import LoginPage from "@pages/login";
 import NotFoundPage from "@pages/not-found";
@@ -16,6 +17,7 @@ export default function AppRouter() {
         <Route path={AppRoutes.signUP} element={<SignupPage />} />
         <Route path={AppRoutes.login} element={<LoginPage />} />
       </Route>
+      <Route path={AppRoutes.dashboard} element={<DashboardPage />} />
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );

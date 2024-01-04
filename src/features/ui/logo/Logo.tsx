@@ -37,6 +37,7 @@ export default function Logo({ isMinimized }: Props) {
       }}
     >
       <LogoIcon />
+
       {!isMinimized && <Typography variant="h4">{APP_NAME}</Typography>}
     </Box>
   );

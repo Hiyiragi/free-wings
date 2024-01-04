@@ -9,7 +9,7 @@ import { auth } from "@services/firebase";
 import { useAppDispatch, useAppSelector } from "@store/index";
 
 import { registerUser } from "../store/authActions";
-import { selectUser, setUserName } from "../store/authSlice";
+import { selectAuth, setUserName } from "../store/authSlice";
 
 interface FormInput {
   email: string;
@@ -20,8 +20,8 @@ interface FormInput {
 
 export default function SignUpForm() {
   const { handleSubmit, onSubmit, password, control } = useSignUpForm();
-  const user = useAppSelector(selectUser);
-  if (user) {
+  const auth = useAppSelector(selectAuth);
+  if (auth.user) {
     return <Navigate to={AppRoutes.dashboard} replace />;
   }
   return (
@@ -125,7 +125,13 @@ export default function SignUpForm() {
           )}
         />
 
-        <AppButton type="submit" variant="contained" sx={{ mb: 2 }} fullWidth>
+        <AppButton
+          loading={auth.status === "loading"}
+          type="submit"
+          variant="contained"
+          sx={{ mb: 2 }}
+          fullWidth
+        >
           Sign up
         </AppButton>
         <Stack direction="row" spacing={0.5} justifyContent="center">

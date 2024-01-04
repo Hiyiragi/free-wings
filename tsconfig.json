@@ -27,7 +27,8 @@
       "@features/*": ["src/features/*"],
       "@config/*": ["src/app/config/*"],
       "@store/*": ["src/app/store/*"],
-      "@services/*": ["src/app/services/*"]
+      "@services/*": ["src/app/services/*"],
+      "@hooks/*": ["src/app/hooks/*"]
     }
   },
   "include": ["src"],

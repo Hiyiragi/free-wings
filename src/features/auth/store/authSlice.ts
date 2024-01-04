@@ -33,7 +33,7 @@ export const authSlice = createSlice({
     },
     logout(state) {
       state.user = null;
-      state.status = "idle";
+      state.status = "succeeded";
       state.error = null;
     },
     setUserName(state, action: PayloadAction<string | null | undefined>) {
@@ -73,6 +73,7 @@ export const authSlice = createSlice({
 // Action creators are generated for each case reducer function
 export const { userLoaded, logout, setUserName } = authSlice.actions;
 
+export const selectAuth = (state: RootState) => state.auth;
 export const selectUser = (state: RootState) => state.auth.user;
 
 export default authSlice.reducer;

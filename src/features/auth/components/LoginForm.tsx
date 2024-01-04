@@ -1,7 +1,5 @@
 import { Controller, type SubmitHandler, useForm } from "react-hook-form";
-
 import { Navigate, useLocation } from "react-router-dom";
-
 
 import { Box, Link, Stack, TextField, Typography } from "@mui/material";
 
@@ -10,11 +8,7 @@ import AppButton from "@features/ui/AppButton";
 import { useAppDispatch, useAppSelector } from "@store/index";
 
 import { loginUser } from "../store/authActions";
-
 import { selectAuth } from "../store/authSlice";
-
-import { selectUser } from "../store/authSlice";
-
 
 interface FormInput {
   email: string;
@@ -26,16 +20,14 @@ export default function LoginForm() {
 
   const auth = useAppSelector(selectAuth);
   const location = useLocation();
+
   if (auth.user) {
-    //Send the user to the page where he was trying to get into when they were redirected to the login page
+    // Send them back to the page they tried to visit when they were
+    // redirected to the login page.
     const from = location.state?.from?.pathname || AppRoutes.dashboard;
     return <Navigate to={from} replace />;
-
-  const user = useAppSelector(selectUser);
-  if (user) {
-    return <Navigate to={AppRoutes.dashboard} replace />;
-
   }
+
   return (
     <Box
       component="form"
@@ -87,7 +79,6 @@ export default function LoginForm() {
         )}
       />
 
-
       <AppButton
         loading={auth.status === "loading"}
         type="submit"
@@ -95,8 +86,6 @@ export default function LoginForm() {
         sx={{ mb: 2 }}
         fullWidth
       >
-
-      
         Login
       </AppButton>
       <Stack direction="row" spacing={0.5} justifyContent="center">

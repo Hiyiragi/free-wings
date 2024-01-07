@@ -1,5 +1,5 @@
-import { createTheme } from "@mui/material";
 import { LinkProps } from "@mui/material/Link";
+import { createTheme } from "@mui/material/styles";
 
 import { FontFamily } from "./FontFamilies";
 import { FontWeights } from "./FontWeights";
@@ -14,6 +14,8 @@ const theme = createTheme({
       primary: "#223644",
       secondary: "#64727C",
     },
+
+    grey: { [100]: "#F9F9F9" },
   },
   components: {
     MuiInputBase: {

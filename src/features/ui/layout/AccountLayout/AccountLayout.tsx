@@ -63,8 +63,8 @@ const StyledDrawer = styled(Drawer, {
 }));
 
 export default function ResponsiveDrawer() {
-  const [isOpen, setOpen] = useState(true);
-  const { md } = useBreakpoints();
+  const { md, xl } = useBreakpoints();
+  const [isOpen, setOpen] = useState(xl);
 
   const closeDrawer = () => {
     setOpen(false);
@@ -114,7 +114,7 @@ export default function ResponsiveDrawer() {
         <>
           <AppBar
             position="fixed"
-            sx={{ boxShadow: "none", background: "transparent" }}
+            sx={{ boxShadow: "none", backgroundColor: "grey.100" }}
           >
             <Toolbar sx={TOOLBAR_STYLES}>
               <IconButton

@@ -1,5 +1,5 @@
-import { createTheme } from "@mui/material";
 import { LinkProps } from "@mui/material/Link";
+import { createTheme } from "@mui/material/styles";
 
 import { FontFamily } from "./FontFamilies";
 import { FontWeights } from "./FontWeights";

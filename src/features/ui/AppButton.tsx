@@ -7,10 +7,12 @@ interface Props {
   fullWidth?: boolean;
   children: React.ReactNode;
   sx?: SxProps<Theme>;
-  loading: boolean;
+  loading?: boolean;
   LinkComponent?: React.ElementType;
   href?: string;
   onClick?: () => void;
+  endIcon?: React.ReactNode;
+  startIcon?: React.ReactNode;
 }
 
 export default function AppButton({
@@ -21,8 +23,9 @@ export default function AppButton({
   children,
   fullWidth,
   sx,
-
+  endIcon,
   loading,
+  startIcon,
   onClick,
 }: Props) {
   return (
@@ -40,6 +43,8 @@ export default function AppButton({
         textTransform: "none",
         ...sx,
       }}
+      endIcon={endIcon}
+      startIcon={startIcon}
     >
       <Typography variant="body2" component="span">
         {children}

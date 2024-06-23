@@ -50,7 +50,7 @@ export default function SignUpForm() {
               variant="standard"
               helperText={fieldState.error?.message}
               error={Boolean(fieldState.error)}
-              sx={{ mb: 3, mt: 0 }}
+              sx={{ mb: 3 }}
               {...field}
             />
           )}
@@ -71,7 +71,7 @@ export default function SignUpForm() {
               variant="standard"
               helperText={fieldState.error?.message}
               error={Boolean(fieldState.error)}
-              sx={{ mb: 3, mt: 0 }}
+              sx={{ mb: 3 }}
               {...field}
             />
           )}
@@ -93,7 +93,7 @@ export default function SignUpForm() {
               variant="standard"
               helperText={fieldState.error?.message}
               error={Boolean(fieldState.error)}
-              sx={{ mb: 3, mt: 0 }}
+              sx={{ mb: 3 }}
               {...field}
             />
           )}
@@ -121,7 +121,7 @@ export default function SignUpForm() {
               variant="standard"
               helperText={fieldState.error?.message}
               error={Boolean(fieldState.error)}
-              sx={{ mb: { xs: 3, md: 5 }, mt: 0 }}
+              sx={{ mb: { xs: 3, md: 5 } }}
               {...field}
             />
           )}

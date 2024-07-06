@@ -2,13 +2,15 @@ import { Controller, type SubmitHandler, useForm } from "react-hook-form";
 
 import ImageSearchIcon from "@mui/icons-material/ImageSearch";
 import { ButtonBase, Stack, TextField, Typography } from "@mui/material";
-import { DatePicker } from "@mui/x-date-pickers";
 
 import { Colors } from "@config/styles";
+import DateSelectInput from "@features/ui/form/DateSelectInput";
+import useDialog from "@services/firebase/hooks/useDialog";
 
+import PreviewImageDialog from "../../../components/PreviewImageDialog";
 import Pagination from "../Navigation/Pagination";
 
-interface FormInput {
+export interface FormInput {
   previewImage: string | null;
   name: string;
   description: string;
@@ -18,6 +20,7 @@ interface FormInput {
 
 export default function TravelInfoForm() {
   const { handleSubmit, onSubmit, control, formValues } = useTravelInfoForm();
+  const { isOpen, close, toggle, open } = useDialog(false);
 
   return (
     <Stack
@@ -29,6 +32,7 @@ export default function TravelInfoForm() {
     >
       <Stack direction={{ xs: "column", md: "row" }} gap={3}>
         <ButtonBase
+          onClick={open}
           sx={{
             border: 1,
             borderColor: "text.secondary",
@@ -69,54 +73,19 @@ export default function TravelInfoForm() {
             )}
           />
           <Stack direction="row" gap={2}>
-            <Controller
+            <DateSelectInput
+              control={control}
               name="startDate"
-              control={control}
-              rules={{ required: "Please specify start date!" }}
-              render={({ field: { ref, ...field }, fieldState }) => (
-                <DatePicker
-                  inputRef={ref}
-                  label="Start Date"
-                  slotProps={{
-                    textField: {
-                      variant: "standard",
-                      inputRef: ref,
-                      helperText: fieldState.error?.message,
-                      error: Boolean(fieldState.error),
-                    },
-                    inputAdornment: { position: "start" },
-                  }}
-                  {...field}
-                  sx={{
-                    width: "100%",
-                    "& .MuiSvgIcon-root": { ml: 0.1 },
-                  }}
-                  maxDate={formValues.endDate}
-                />
-              )}
+              requiredErrorText="Please specify start date!"
+              maxDate={formValues.endDate}
+              label="Start date"
             />
-            <Controller
-              name="endDate"
+            <DateSelectInput
               control={control}
-              rules={{ required: "Please specify end date!" }}
-              render={({ field: { ref, ...field }, fieldState }) => (
-                <DatePicker
-                  inputRef={ref}
-                  label="End Date"
-                  slotProps={{
-                    textField: {
-                      variant: "standard",
-                      inputRef: ref,
-                      helperText: fieldState.error?.message,
-                      error: Boolean(fieldState.error),
-                    },
-                    inputAdornment: { position: "start" },
-                  }}
-                  {...field}
-                  sx={{ width: "100%" }}
-                  minDate={formValues.startDate}
-                />
-              )}
+              name="endDate"
+              requiredErrorText="Please specify end date!"
+              minDate={formValues.startDate}
+              label="End date"
             />
           </Stack>
         </Stack>
@@ -145,6 +114,7 @@ export default function TravelInfoForm() {
         )}
       />
       <Pagination />
+      <PreviewImageDialog isOpen={isOpen} toggle={toggle} onClose={close} />
     </Stack>
   );
 }

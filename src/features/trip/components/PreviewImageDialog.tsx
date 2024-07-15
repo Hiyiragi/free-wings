@@ -4,24 +4,28 @@ import { ButtonBase, Grid } from "@mui/material";
 
 import AppDialog from "@features/ui/AppDialog";
 
-import { TRIP_PREVIEW_IMAGES, type TripPreviewImage } from "../data";
+import { TRIP_PREVIEW_IMAGES } from "../data";
+import type { Trip } from "../type";
 import UploadFileButton from "./UploadFileButton";
 
 interface Props {
   isOpen: boolean;
-  toggle: () => void;
   onClose: () => void;
+  onSave: (previewImage: Trip["previewImage"]) => void;
 }
 
-function PreviewImageDialog({ isOpen, toggle, onClose }: Props) {
-  const [selectedImage, setSelectedImage] = useState<TripPreviewImage | null>(
-    null,
-  );
+export default function PreviewImageDialog({ isOpen, onClose, onSave }: Props) {
+  const [selectedImage, setSelectedImage] =
+    useState<Trip["previewImage"]>(null);
+
+  const onSaveClick = () => {
+    onSave(selectedImage);
+  };
   return (
     <AppDialog
       isOpen={isOpen}
       onClose={onClose}
-      onPrimaryButtonClick={toggle}
+      onPrimaryButtonClick={onSaveClick}
       title="Select your preview image"
       primaryButtonText="save"
     >
@@ -34,10 +38,12 @@ function PreviewImageDialog({ isOpen, toggle, onClose }: Props) {
                 overflow: "hidden",
                 border: 4,
                 borderColor:
-                  selectedImage?.id === item.id ? "primary.main" : "white",
+                  selectedImage?.templateImageId === item.id
+                    ? "primary.main"
+                    : "white",
               }}
               onClick={() => {
-                setSelectedImage(item);
+                setSelectedImage({ templateImageId: item.id });
               }}
             >
               <img
@@ -60,5 +66,3 @@ function PreviewImageDialog({ isOpen, toggle, onClose }: Props) {
     </AppDialog>
   );
 }
-
-export default PreviewImageDialog;

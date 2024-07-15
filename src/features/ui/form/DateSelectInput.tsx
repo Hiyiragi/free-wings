@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import { type Control, Controller } from "react-hook-form";
 
 import { DatePicker } from "@mui/x-date-pickers";
@@ -6,45 +7,53 @@ interface Props {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   control: Control<any, unknown>;
   name: string;
-  requiredErrorText?: string;
+  label: string;
+  requireErrorText?: string;
   maxDate?: Date | null;
   minDate?: Date | null;
-  label: string;
 }
-
 export default function DateSelectInput({
   control,
   name,
-  requiredErrorText,
-  maxDate,
+  requireErrorText,
   label,
+  maxDate,
   minDate,
 }: Props) {
   return (
     <Controller
       name={name}
       control={control}
-      rules={{ required: requiredErrorText }}
+      rules={{ required: requireErrorText }}
       render={({ field: { ref, ...field }, fieldState }) => (
         <DatePicker
-          inputRef={ref}
           label={label}
           slotProps={{
             textField: {
-              variant: "standard",
               inputRef: ref,
+              variant: "standard",
               helperText: fieldState.error?.message,
               error: Boolean(fieldState.error),
             },
             inputAdornment: { position: "start" },
           }}
           {...field}
+          onChange={(newValue) => {
+            let value;
+            try {
+              value = dayjs(newValue).toISOString();
+            } catch {
+              // empty
+            }
+            field.onChange(value ?? newValue);
+          }}
           sx={{
             width: "100%",
             "& .MuiSvgIcon-root": { ml: 0.1 },
           }}
-          maxDate={maxDate}
-          minDate={minDate}
+          value={field.value ? dayjs(field.value) : null}
+          maxDate={maxDate ? dayjs(maxDate) : undefined}
+          minDate={minDate ? dayjs(minDate) : undefined}
         />
       )}
     />

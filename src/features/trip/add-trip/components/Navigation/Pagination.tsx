@@ -3,12 +3,18 @@ import { MobileStepper } from "@mui/material";
 
 import AppButton from "@features/ui/AppButton";
 import { useBreakpoints } from "@hooks/useBreakpoints";
+import { useAppDispatch, useAppSelector } from "@store/index";
 
 import { WIZARD_STEPS } from "../../data";
+import { previousStep, selectCurrentStep } from "../../store/tripWizardSlice";
 
 export default function Pagination() {
   const { md, lg } = useBreakpoints();
-  const currentStep = 0;
+  const currentStep = useAppSelector(selectCurrentStep);
+  const dispatch = useAppDispatch();
+
+  const onBackButtonClick = () => dispatch(previousStep());
+
   return (
     <MobileStepper
       variant={lg ? "dots" : "text"}
@@ -28,6 +34,7 @@ export default function Pagination() {
           sx={{
             visibility: currentStep === 0 ? "hidden" : "visible",
           }}
+          onClick={onBackButtonClick}
         >
           Back
         </AppButton>

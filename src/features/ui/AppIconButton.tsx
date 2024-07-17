@@ -1,11 +1,11 @@
 import { Button, type SxProps, type Theme } from "@mui/material";
 
 interface Props {
-  isSmall: boolean;
+  isSmall?: boolean;
   children: JSX.Element;
   "aria-label": string;
   onClick: () => void;
-  sx: SxProps<Theme>;
+  sx?: SxProps<Theme>;
 }
 
 export default function AppIconButton(props: Props) {
@@ -15,8 +15,8 @@ export default function AppIconButton(props: Props) {
       aria-label={props["aria-label"]}
       sx={{
         borderRadius: 2,
-        width: props.isSmall ? 34 : 58,
-        height: props.isSmall ? 34 : 58,
+        width: { xs: props.isSmall ? 34 : 48, md: props.isSmall ? 34 : 58 },
+        height: { xs: props.isSmall ? 34 : 48, md: props.isSmall ? 34 : 58 },
         minWidth: "auto",
         ...props.sx,
       }}

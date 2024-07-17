@@ -152,7 +152,6 @@ export default function TravelInfoForm() {
           <TextField
             inputRef={ref}
             margin="normal"
-            required
             fullWidth
             id="description"
             label="Description"

@@ -84,6 +84,7 @@ export default function AppDialog({
             sx={{
               px: { xs: MOBILE_PADDING_X, md: DESKTOP_PADDING_X },
               py: 0,
+              pb: { xs: 12, md: 0 },
             }}
           >
             {children}
@@ -97,6 +98,7 @@ export default function AppDialog({
             position: { xs: "fixed", md: "static" },
             bottom: 0,
             width: "100%",
+            backgroundColor: "white",
           }}
         >
           <AppButton

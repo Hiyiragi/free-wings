@@ -35,7 +35,7 @@ export default function ExpenseCategoryIcon({
         color,
         backgroundColor,
         borderRadius: 1,
-        border: 3,
+        border: onClick ? 3 : 0,
         borderColor,
       }}
     >

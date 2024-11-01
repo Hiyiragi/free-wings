@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 
 import AppIconButton from "@features/ui/AppIconButton";
+import { useBreakpoints } from "@hooks/useBreakpoints";
 
 import { EXPENSE_ICON_BY_CATEGORY } from "../../data";
 import type { Trip } from "../../type";
@@ -26,25 +27,28 @@ interface Props {
 
 export default function ExpensesTable({ expenses, onDelete }: Props) {
   const bottomBoxRef = useRef<null | HTMLDivElement>(null);
+  const { md } = useBreakpoints();
 
   useEffect(() => {
     bottomBoxRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [expenses]);
   return (
     <TableContainer>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+      <Table aria-label="Expense Table">
         <TableHead>
           <TableRow>
-            <TableCell>
+            <TableCell sx={{ width: { xs: "45%", md: "25%" } }}>
               <Typography component="span" variant="subtitle2">
                 Category
               </Typography>
             </TableCell>
-            <TableCell>
-              <Typography component="span" variant="subtitle2">
-                Description
-              </Typography>
-            </TableCell>
+            {md && (
+              <TableCell sx={{ width: "100%" }}>
+                <Typography component="span" variant="subtitle2">
+                  Description
+                </Typography>
+              </TableCell>
+            )}
             <TableCell>
               <Typography component="span" variant="subtitle2">
                 Amount
@@ -66,7 +70,12 @@ export default function ExpensesTable({ expenses, onDelete }: Props) {
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell>
-                  <Stack component="span" alignItems="center" direction="row">
+                  <Stack
+                    component="span"
+                    alignItems="center"
+                    direction="row"
+                    gap={1}
+                  >
                     <ExpenseCategoryIcon
                       category={expense.category}
                       color={iconInfo.color}
@@ -81,15 +90,22 @@ export default function ExpensesTable({ expenses, onDelete }: Props) {
                     </Typography>
                   </Stack>
                 </TableCell>
-                <TableCell sx={{ width: 200, maxWidth: 200 }}>
-                  <Typography
-                    component="span"
-                    variant="subtitle1"
-                    sx={{ wordWrap: "break-word" }}
+                {md && (
+                  <TableCell
+                    sx={{
+                      width: 200,
+                      maxWidth: 200,
+                    }}
                   >
-                    {expense.description}
-                  </Typography>
-                </TableCell>
+                    <Typography
+                      component="span"
+                      variant="subtitle1"
+                      sx={{ wordWrap: "break-word" }}
+                    >
+                      {expense.description}
+                    </Typography>
+                  </TableCell>
+                )}
                 <TableCell>
                   <Typography component="span" variant="subtitle1">
                     ${expense.amount}

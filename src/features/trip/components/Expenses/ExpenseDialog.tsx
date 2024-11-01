@@ -15,6 +15,7 @@ import { useBreakpoints } from "@hooks/useBreakpoints";
 import AppDialog from "../../../ui/AppDialog";
 import { EXPENSES_CATEGORIES, EXPENSE_ICON_BY_CATEGORY } from "../../data";
 import type { Expense } from "../../type";
+import { removeTrailingZeros } from "../../utils/removeTrailingZeros";
 import ExpenseCategoryIcon from "./ExpenseCategoryIcon";
 
 interface Props {
@@ -127,6 +128,9 @@ export default function ExpenseDialog({ isOpen, onClose, onSave }: Props) {
                 helperText={fieldState.error?.message}
                 error={Boolean(fieldState.error)}
                 {...field}
+                onChange={(e) =>
+                  field.onChange(removeTrailingZeros(e.target.value))
+                }
               />
             )}
           />

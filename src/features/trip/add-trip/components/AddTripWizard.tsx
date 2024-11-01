@@ -33,7 +33,7 @@ export default function AddTripWizard() {
         <Typography
           variant="subtitle1"
           color="text.secondary"
-          sx={{ display: { xs: "none", md: "block" }, mb: 3 }}
+          sx={{ display: { xs: "none", md: "block" }, mb: 3, maxWidth: "72%" }}
         >
           {stepData.description}
         </Typography>

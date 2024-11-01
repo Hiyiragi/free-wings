@@ -1,5 +1,6 @@
 import CloseIcon from "@mui/icons-material/Close";
 import {
+  Box,
   Dialog,
   DialogActions,
   DialogContent,
@@ -21,8 +22,10 @@ interface Props {
   primaryButtonText?: string;
   isOpen: boolean;
   onClose: () => void;
-  onPrimaryButtonClick: () => void;
+  onPrimaryButtonClick?: () => void;
   children: React.ReactNode;
+  isForm: boolean;
+  maxWidth?: number;
 }
 
 export default function AppDialog({
@@ -32,6 +35,8 @@ export default function AppDialog({
   children,
   title,
   primaryButtonText,
+  isForm,
+  maxWidth,
 }: Props) {
   const { md } = useBreakpoints();
   return (
@@ -41,7 +46,11 @@ export default function AppDialog({
         aria-labelledby="customized-dialog-title"
         open={isOpen}
         PaperProps={{
-          sx: { borderRadius: 2, width: { md: 864 }, maxWidth: "inherit" },
+          sx: {
+            borderRadius: 2,
+            width: { md: 864 },
+            maxWidth: maxWidth ?? "inherit",
+          },
         }}
         fullScreen={!md}
       >
@@ -68,15 +77,16 @@ export default function AppDialog({
         >
           {title}
         </Typography>
-
-        <DialogContent
-          sx={{
-            px: { xs: MOBILE_PADDING_X, md: DESKTOP_PADDING_X },
-            py: 0,
-          }}
-        >
-          {children}
-        </DialogContent>
+        <Box component={isForm ? "form" : "div"}>
+          <DialogContent
+            sx={{
+              px: { xs: MOBILE_PADDING_X, md: DESKTOP_PADDING_X },
+              py: 0,
+            }}
+          >
+            {children}
+          </DialogContent>
+        </Box>
         <DialogActions
           sx={{
             px: { xs: MOBILE_PADDING_X, md: DESKTOP_PADDING_X },
@@ -84,7 +94,11 @@ export default function AppDialog({
             pt: 3,
           }}
         >
-          <AppButton fullWidth onClick={onPrimaryButtonClick}>
+          <AppButton
+            type={isForm ? "submit" : "button"}
+            fullWidth
+            onClick={onPrimaryButtonClick}
+          >
             {primaryButtonText}
           </AppButton>
         </DialogActions>

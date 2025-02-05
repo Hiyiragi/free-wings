@@ -6,7 +6,7 @@ import { Stack } from "@mui/material";
 import ExpensesTable from "@features/trip/components/Expenses/ExpensesTable";
 import { Expense, Trip } from "@features/trip/type";
 import AppButton from "@features/ui/AppButton";
-import useDialog from "@services/firebase/hooks/useDialog";
+import useDialog from "@hooks/useDialog";
 import { useAppDispatch, useAppSelector } from "@store/index";
 
 import ExpenseDialog from "../../../components/Expenses/ExpenseDialog";

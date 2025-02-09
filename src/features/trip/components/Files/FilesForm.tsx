@@ -49,7 +49,7 @@ export default function FilesForm(props: Props) {
       noValidate
       onSubmit={handleSubmit(onSubmit)}
       direction="row"
-      gap={2}
+      gap={{ xs: 1, md: 2 }}
       flexWrap="wrap"
       sx={{ width: "100%" }}
     >

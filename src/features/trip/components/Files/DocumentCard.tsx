@@ -31,7 +31,7 @@ export default function DocumentCard({
         borderRadius: 4,
         borderColor: "grey.200",
         border: 1,
-        width: 200,
+        width: { xs: 170, md: 200 },
         height: "100%",
       }}
     >
@@ -79,14 +79,25 @@ export default function DocumentCard({
             justifyContent="center"
             sx={{
               width: "100%",
-              height: 133,
+              height: { xs: 148, md: 133 },
               bgcolor: "grey.100",
               borderRadius: 4,
             }}
           >
             <InsertDriveFileIcon sx={{ color: "text.secondary" }} />
           </Stack>
-          <Typography color="text.primary">{name}</Typography>
+          <Typography
+            color="text.primary"
+            sx={{
+              overflow: "hidden",
+              display: "-webkit-box",
+              "-webkit-line-clamp": "1",
+              lineClamp: "1",
+              "-webkit-box-orient": "vertical",
+            }}
+          >
+            {name}
+          </Typography>
         </Stack>
       </Stack>
     </Box>

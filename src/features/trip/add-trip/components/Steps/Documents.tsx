@@ -10,12 +10,13 @@ import {
 import Pagination from "../Navigation/Pagination";
 
 export default function Documents() {
-  const { onSubmit, documents } = useDocumentsForm();
+  const { onSubmit, documents, onChange } = useDocumentsForm();
   return (
     <FilesForm
       SubmitComponent={<Pagination />}
       onSubmit={onSubmit}
       defaultFiles={documents}
+      onChange={onChange}
     />
   );
 }
@@ -30,8 +31,13 @@ function useDocumentsForm() {
     dispatch(nextStep());
   };
 
+  const onChange = (data: TripFile[]) => {
+    dispatch(setDocuments(data));
+  };
+
   return {
     onSubmit,
     documents: trip.documents,
+    onChange,
   };
 }

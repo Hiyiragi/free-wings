@@ -13,7 +13,7 @@ import {
 import { Colors } from "@config/styles";
 import { TRIP_PREVIEW_IMAGES } from "@features/trip/data";
 import DateSelectInput from "@features/ui/form/DateSelectInput";
-import useDialog from "@services/firebase/hooks/useDialog";
+import useDialog from "@hooks/useDialog";
 import { useAppDispatch, useAppSelector } from "@store/index";
 
 import type { Trip } from "../../../../trip/type";

@@ -40,7 +40,7 @@ export default function UploadFileButton({
           flexDirection: "column",
           gap: 1,
           width: "100%",
-          height: { xs: "100%", md: 260 },
+          height: "100%",
           color: "primary.main",
           px: 1,
           borderRadius: 4,

@@ -7,7 +7,7 @@ interface Props {
   "aria-label": string;
   onClick: () => void;
   sx?: SxProps<Theme>;
-  disabled: boolean;
+  disabled?: boolean;
   variant?: "outlined" | "contained";
   isLoading?: boolean;
 }

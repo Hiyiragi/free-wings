@@ -13,6 +13,7 @@ interface Props {
   onClick?: () => void;
   endIcon?: React.ReactNode;
   startIcon?: React.ReactNode;
+  disabled?: boolean;
 }
 
 export default function AppButton({
@@ -27,9 +28,11 @@ export default function AppButton({
   loading,
   startIcon,
   onClick,
+  disabled,
 }: Props) {
   return (
     <LoadingButton
+      disabled={disabled}
       href={href}
       LinkComponent={LinkComponent}
       type={type}

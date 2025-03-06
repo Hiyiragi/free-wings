@@ -1,4 +1,4 @@
-import { addTrip } from "@services/api/trip";
+import { addTrip } from "@services/api";
 import { useAppDispatch, useAppSelector } from "@store/index";
 
 import FilesForm from "../../../components/Files/FilesForm";

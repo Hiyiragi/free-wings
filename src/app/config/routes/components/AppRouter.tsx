@@ -4,7 +4,8 @@ import AccountLayout from "@features/ui/layout/AccountLayout/AccountLayout";
 import Authlayout from "@features/ui/layout/Authlayout";
 import AddTripPage from "@pages/account/add-trip";
 import DashboardPage from "@pages/account/dashboard";
-import TripsPage from "@pages/account/trips";
+import TripDetailsPage from "@pages/account/trips/trip-details";
+import TripsPage from "@pages/account/trips/trips";
 import HomePage from "@pages/home";
 import LoginPage from "@pages/login";
 import NotFoundPage from "@pages/not-found";
@@ -33,6 +34,10 @@ export default function AppRouter() {
         <Route path={AppRoutes.dashboard} element={<DashboardPage />} />
         <Route path={AppRoutes.addTrip} element={<AddTripPage />} />
         <Route path={AppRoutes.trips} element={<TripsPage />} />
+        <Route
+          path={`${AppRoutes.trips}/:tripId`}
+          element={<TripDetailsPage />}
+        />
       </Route>
       {/* Not Found Page */}
       <Route path="*" element={<NotFoundPage />} />

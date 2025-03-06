@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
@@ -15,6 +15,7 @@ import {
   styled,
 } from "@mui/material";
 
+import ErrorBoundary from "@config/routes/components/ErrorBoundary";
 import { theme } from "@config/styles";
 import AppIconButton from "@features/ui/AppIconButton";
 import { useBreakpoints } from "@hooks/useBreakpoints";
@@ -62,7 +63,7 @@ const StyledDrawer = styled(Drawer, {
   }),
 }));
 
-export default function ResponsiveDrawer() {
+export default function AccountLayout() {
   const { md, xl } = useBreakpoints();
   const [isOpen, setOpen] = useState(xl);
 
@@ -73,7 +74,9 @@ export default function ResponsiveDrawer() {
   const handleDrawerToggle = () => {
     setOpen(!isOpen);
   };
-
+  //This call is used to cause rerender when you
+  //
+  useLocation();
   return (
     <Box
       sx={{
@@ -169,7 +172,9 @@ export default function ResponsiveDrawer() {
         }}
       >
         <Toolbar sx={{ display: { md: "none" }, ...TOOLBAR_STYLES }} />
-        <Outlet />
+        <ErrorBoundary>
+          <Outlet />
+        </ErrorBoundary>
       </Box>
     </Box>
   );

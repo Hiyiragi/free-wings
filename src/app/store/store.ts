@@ -40,8 +40,8 @@ export const store = configureStore({
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
     })
-      .concat(tripsApi.middleware)
-      .concat(rtkQueryErrorLogger),
+      .concat(rtkQueryErrorLogger)
+      .concat(tripsApi.middleware),
 });
 
 export const persistor = persistStore(store);

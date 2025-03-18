@@ -27,7 +27,7 @@ export default function Expenses() {
     useExpensesForm({
       closeExpenseDialog: close,
     });
-  console.log(expenses, "expenses");
+
   return (
     <Stack
       component="form"

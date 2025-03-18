@@ -5,6 +5,7 @@ import {
   getDocs,
   query,
   setDoc,
+  updateDoc,
   where,
 } from "firebase/firestore";
 
@@ -54,4 +55,16 @@ export async function getTripById(tripId: string | undefined) {
   }
 
   return tripSnap.data() as Trip;
+}
+
+export async function updateTrip(tripId: string, data: Partial<Trip>) {
+  if (!auth.currentUser) {
+    throw Error("You are not authorized to make this change");
+  }
+
+  const tripRef = doc(firestore, "trips", tripId);
+
+  await updateDoc(tripRef, data);
+
+  return true;
 }

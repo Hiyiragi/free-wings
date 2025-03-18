@@ -11,13 +11,13 @@ import {
 } from "@mui/material";
 
 import { Colors } from "@config/styles";
-import { TRIP_PREVIEW_IMAGES } from "@features/trip/data";
 import DateSelectInput from "@features/ui/form/DateSelectInput";
 import useDialog from "@hooks/useDialog";
 import { useAppDispatch, useAppSelector } from "@store/index";
 
-import type { Trip } from "../../../../trip/type";
 import PreviewImageDialog from "../../../components/PreviewImageDialog";
+import { usePreviewImageSrc } from "../../../hooks/usePreviewImageSrc";
+import type { Trip } from "../../../type";
 import {
   nextStep,
   selectWizardTrip,
@@ -33,7 +33,7 @@ export interface FormInput {
   endDate: Trip["endDate"];
 }
 
-export default function TravelInfoForm() {
+export default function TripInfo() {
   const { isOpen, close, open } = useDialog(false);
 
   const {
@@ -129,6 +129,7 @@ export default function TravelInfoForm() {
           />
           <Stack direction="row" gap={2}>
             <DateSelectInput
+              fullWidth
               control={control}
               name="startDate"
               requireErrorText="Please specify start date!"
@@ -136,6 +137,7 @@ export default function TravelInfoForm() {
               label="Start date"
             />
             <DateSelectInput
+              fullWidth
               control={control}
               name="endDate"
               requireErrorText="Please specify end date!"
@@ -202,11 +204,7 @@ function useTravelInfoForm({
     },
   });
   const formValues = watch();
-  const previewImageSrc = formValues.previewImage?.templateImageId
-    ? TRIP_PREVIEW_IMAGES.find(
-        (item) => item.id === formValues.previewImage?.templateImageId,
-      )?.src
-    : null;
+  const previewImageSrc = usePreviewImageSrc(formValues.previewImage);
 
   const onPreviewImageSave = (previewImage: Trip["previewImage"]) => {
     closePreviewImageDialog();

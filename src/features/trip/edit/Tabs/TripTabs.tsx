@@ -31,7 +31,7 @@ function CustomTabPanel({
       id={`trip-edit-tabpanel-${index}`}
       aria-labelledby={`trip-edit-tab-${index}`}
       style={{
-        height: "90vh",
+        minHeight: "90vh",
       }}
     >
       {children}

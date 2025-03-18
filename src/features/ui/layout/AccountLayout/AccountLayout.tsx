@@ -85,9 +85,7 @@ export default function AccountLayout() {
       sx={{
         display: "flex",
         bgcolor: "grey.100",
-        minHeight: { md: "100vh" },
-        height: { xs: "100vh", md: "auto" },
-        maxHeight: { xs: "-webkit-fill-available", md: "auto" },
+        minHeight: "100vh",
       }}
     >
       {/* Desktop Drawer */}
@@ -102,7 +100,7 @@ export default function AccountLayout() {
             onClick={handleDrawerToggle}
             sx={{
               borderRadius: 1,
-              position: "absolute",
+              position: "fixed",
               top: 27,
               left: `calc(${
                 isOpen ? DESKTOP_DRAWER_WIDTH : DESKTOP_MINIMIZED_DRAWER_WIDTH

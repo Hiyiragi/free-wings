@@ -1,16 +1,23 @@
-import { addTrip } from "@services/api";
+import { useNavigate } from "react-router-dom";
+
+import { AppRoutes } from "@config/routes";
+import { useAddTripMutation } from "@features/trip/store/tripsApi";
 import { useAppDispatch, useAppSelector } from "@store/index";
 
 import FilesForm from "../../../components/Files/FilesForm";
 import type { TripFile } from "../../../type";
-import { selectWizardTrip, setPhotos } from "../../store/tripWizardSlice";
+import {
+  resetWizard,
+  selectWizardTrip,
+  setPhotos,
+} from "../../store/tripWizardSlice";
 import Pagination from "../Navigation/Pagination";
 
 export default function Photos() {
-  const { onSubmit, photos, onChange } = usePhotosForm();
+  const { onSubmit, photos, onChange, isLoading } = usePhotosForm();
   return (
     <FilesForm
-      SubmitComponent={<Pagination />}
+      SubmitComponent={<Pagination isLoading={isLoading} />}
       onSubmit={onSubmit}
       defaultFiles={photos}
       onChange={onChange}
@@ -21,12 +28,20 @@ export default function Photos() {
 
 function usePhotosForm() {
   const trip = useAppSelector(selectWizardTrip);
+  const navigate = useNavigate();
+
+  const [addTrip, { isLoading }] = useAddTripMutation();
 
   const dispatch = useAppDispatch();
 
   const onSubmit = async (data: TripFile[]) => {
+    if (isLoading) return;
     dispatch(setPhotos(data));
-    await addTrip({ ...trip, photos: data });
+    const result = await addTrip({ ...trip, photos: data });
+    if (!("error" in result)) {
+      navigate(AppRoutes.trips);
+      dispatch(resetWizard());
+    }
   };
 
   const onChange = (data: TripFile[]) => {
@@ -37,5 +52,6 @@ function usePhotosForm() {
     onSubmit,
     photos: trip.photos,
     onChange,
+    isLoading,
   };
 }

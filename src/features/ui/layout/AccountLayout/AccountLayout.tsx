@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
@@ -64,6 +64,7 @@ const StyledDrawer = styled(Drawer, {
 }));
 
 export default function AccountLayout() {
+  const location = useLocation();
   const { md, xl } = useBreakpoints();
   const [isOpen, setOpen] = useState(xl);
 
@@ -74,9 +75,11 @@ export default function AccountLayout() {
   const handleDrawerToggle = () => {
     setOpen(!isOpen);
   };
-  //This call is used to cause rerender when you
-  //
-  useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+
   return (
     <Box
       sx={{

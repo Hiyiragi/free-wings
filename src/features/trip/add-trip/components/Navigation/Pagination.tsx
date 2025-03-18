@@ -8,7 +8,11 @@ import { useAppDispatch, useAppSelector } from "@store/index";
 import { WIZARD_STEPS } from "../../data";
 import { previousStep, selectCurrentStep } from "../../store/tripWizardSlice";
 
-export default function Pagination() {
+interface Props {
+  isLoading?: boolean;
+}
+
+export default function Pagination({ isLoading }: Props) {
   const { md, lg } = useBreakpoints();
   const currentStep = useAppSelector(selectCurrentStep);
   const dispatch = useAppDispatch();
@@ -22,7 +26,12 @@ export default function Pagination() {
       position="static"
       activeStep={currentStep}
       nextButton={
-        <AppButton fullWidth={!md} type="submit" endIcon={<ArrowForward />}>
+        <AppButton
+          fullWidth={!md}
+          type="submit"
+          endIcon={<ArrowForward />}
+          loading={isLoading}
+        >
           Next
         </AppButton>
       }

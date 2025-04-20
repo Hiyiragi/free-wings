@@ -9,23 +9,32 @@ interface Props {
   onRemoveClick: () => void;
   uploadProgress: number | undefined;
   isRemoving: boolean;
+  onClick?: () => void;
+  enableBorders?: boolean;
+  borderColor?: string;
 }
 
-export default function DocumentCard({
+export default function PhotoCard({
   src,
   onRemoveClick,
   uploadProgress,
   isRemoving,
+  onClick,
+  enableBorders,
+  borderColor,
 }: Props) {
   const { md } = useBreakpoints();
   return (
     <Box
+      onClick={onClick}
       sx={{
         position: "relative",
         borderRadius: 4,
+        border: enableBorders ? 4 : 0,
+        borderColor: borderColor,
         height: "100%",
         width: "100%",
-        overflow: "hiddden",
+        overflow: "hidden",
       }}
     >
       {uploadProgress != undefined && (
@@ -43,7 +52,10 @@ export default function DocumentCard({
         isSmall={!md}
         variant="contained"
         aria-label="remove photo"
-        onClick={onRemoveClick}
+        onClick={(event) => {
+          event?.stopPropagation();
+          onRemoveClick();
+        }}
         sx={{
           position: "absolute",
           top: 12,
@@ -56,9 +68,9 @@ export default function DocumentCard({
         <CloseIcon fontSize={md ? "medium" : "small"} />
       </AppIconButton>
       <Stack
-        href={isRemoving ? " " : src ?? "#"}
+        href={isRemoving || onClick ? " " : src ?? "#"}
         component={Link}
-        target={isRemoving ? "_self" : "_blank"}
+        target={isRemoving || onClick ? "_self" : "_blank"}
         rel="noopener noreferrer"
         gap={2}
         sx={{
@@ -69,14 +81,14 @@ export default function DocumentCard({
           opacity: uploadProgress ? 0.2 : 1,
         }}
       >
-        <Box
-          component="img"
+        <img
           src={src ?? ""}
           alt="custom photo"
-          sx={{
+          style={{
             width: "100%",
             height: "100%",
             objectFit: "cover",
+            aspectRatio: "1/1",
           }}
         />
       </Stack>

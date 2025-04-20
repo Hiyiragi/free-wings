@@ -10,7 +10,7 @@ import { storage } from "../firebase";
 
 interface Props {
   onAllUploadSuccess: (uploadedFiles: TripFile[]) => void;
-  onOneUploadSuccess: (uploadedFile: TripFile, index: number) => void;
+  onOneUploadSuccess?: (uploadedFile: TripFile, index: number) => void;
 }
 
 interface State {
@@ -136,7 +136,7 @@ export function useStorage({ onAllUploadSuccess, onOneUploadSuccess }: Props) {
               fileName: file.fileName,
               storagePath: uploadTask.snapshot.ref.fullPath,
             };
-            onOneUploadSuccess(newUploadedFiles[index], index);
+            onOneUploadSuccess?.(newUploadedFiles[index], index);
 
             return {
               ...prevState,
@@ -185,5 +185,9 @@ export function useStorage({ onAllUploadSuccess, onOneUploadSuccess }: Props) {
     return false;
   };
 
-  return { removeFile, uploadFiles, ...state };
+  const resetState = () => {
+    setState(defaultState);
+  };
+
+  return { removeFile, uploadFiles, resetState, ...state };
 }

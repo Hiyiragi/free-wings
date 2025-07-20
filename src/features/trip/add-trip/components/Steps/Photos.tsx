@@ -14,13 +14,13 @@ import {
 import Pagination from "../Navigation/Pagination";
 
 export default function Photos() {
-  const { onSubmit, photos, onChange, isLoading } = usePhotosForm();
+  const { onSubmit, photos, onFileStorageRemoval, isLoading } = usePhotosForm();
   return (
     <FilesForm
       SubmitComponent={<Pagination isLoading={isLoading} />}
       onSubmit={onSubmit}
       defaultFiles={photos}
-      onChange={onChange}
+      onFileStorageRemoval={onFileStorageRemoval}
       type="photo"
     />
   );
@@ -44,14 +44,14 @@ function usePhotosForm() {
     }
   };
 
-  const onChange = (data: TripFile[]) => {
+  const onFileStorageRemoval = (data: TripFile[]) => {
     dispatch(setPhotos(data));
   };
 
   return {
     onSubmit,
     photos: trip.photos,
-    onChange,
+    onFileStorageRemoval,
     isLoading,
   };
 }

@@ -10,13 +10,13 @@ import {
 import Pagination from "../Navigation/Pagination";
 
 export default function Documents() {
-  const { onSubmit, documents, onChange } = useDocumentsForm();
+  const { onSubmit, documents, onFileStorageRemoval } = useDocumentsForm();
   return (
     <FilesForm
       SubmitComponent={<Pagination />}
       onSubmit={onSubmit}
       defaultFiles={documents}
-      onChange={onChange}
+      onFileStorageRemoval={onFileStorageRemoval}
       type="document"
     />
   );
@@ -32,13 +32,13 @@ function useDocumentsForm() {
     dispatch(nextStep());
   };
 
-  const onChange = (data: TripFile[]) => {
+  const onFileStorageRemoval = (data: TripFile[]) => {
     dispatch(setDocuments(data));
   };
 
   return {
     onSubmit,
     documents: trip.documents,
-    onChange,
+    onFileStorageRemoval,
   };
 }

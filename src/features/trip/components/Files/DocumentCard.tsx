@@ -92,9 +92,9 @@ export default function DocumentCard({
             sx={{
               overflow: "hidden",
               display: "-webkit-box",
-              "-webkit-line-clamp": "1",
+              WebkitLineClamp: "1",
               lineClamp: "1",
-              "-webkit-box-orient": "vertical",
+              WebkitBoxOrient: "vertical",
             }}
           >
             {name}

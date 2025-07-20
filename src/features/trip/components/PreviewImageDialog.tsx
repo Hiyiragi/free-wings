@@ -36,11 +36,11 @@ export default function PreviewImageDialog({
 
   const {
     uploadFiles,
-    upLoadProgresses,
+    uploadProgresses,
     removingFilePath,
     removeFile,
     isLoading,
-    upLoadErrors,
+    uploadErrors,
     resetState,
   } = useStorage({
     onAllUploadSuccess: (uploadedFiles) => {
@@ -128,11 +128,11 @@ export default function PreviewImageDialog({
 
   //File upload erros displaying
   useEffect(() => {
-    if (upLoadErrors[0]) {
-      showErrorMessage(upLoadErrors[0]);
+    if (uploadErrors[0]) {
+      showErrorMessage(uploadErrors[0]);
       resetState();
     }
-  }, [upLoadErrors, showErrorMessage, resetState]);
+  }, [uploadErrors, showErrorMessage, resetState]);
 
   return (
     <AppDialog
@@ -179,7 +179,7 @@ export default function PreviewImageDialog({
                   : customPreviewImageSrc
               }
               onRemoveClick={onCustomImageRemoveClick}
-              uploadProgress={upLoadProgresses[0]}
+              uploadProgress={uploadProgresses[0]}
               isRemoving={Boolean(removingFilePath)}
               onClick={selectCustomPreviewImage}
               enableBorders

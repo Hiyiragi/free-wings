@@ -14,9 +14,9 @@ interface Props {
 }
 
 interface State {
-  upLoadProgresses: (number | undefined)[];
-  upLoadErrors: string[];
-  upLoadedFiles: TripFile[];
+  uploadProgresses: (number | undefined)[];
+  uploadErrors: string[];
+  uploadedFiles: TripFile[];
   totalFiles: number;
   isLoading: boolean;
   uploadedFilesCount: number;
@@ -24,9 +24,9 @@ interface State {
 }
 
 const defaultState: State = {
-  upLoadProgresses: [],
-  upLoadErrors: [],
-  upLoadedFiles: [],
+  uploadProgresses: [],
+  uploadErrors: [],
+  uploadedFiles: [],
   totalFiles: 0,
   uploadedFilesCount: 0,
   isLoading: false,
@@ -43,10 +43,10 @@ export function useStorage({ onAllUploadSuccess, onOneUploadSuccess }: Props) {
       setState((prevState) => {
         return { ...prevState, isLoading: false };
       });
-      onAllUploadSuccess(state.upLoadedFiles);
+      onAllUploadSuccess(state.uploadedFiles);
     } else if (
       state.totalFiles > 0 &&
-      state.uploadedFilesCount + state.upLoadErrors.filter(Boolean).length ===
+      state.uploadedFilesCount + state.uploadErrors.filter(Boolean).length ===
         state.totalFiles
     ) {
       setState((prevState) => {
@@ -56,8 +56,8 @@ export function useStorage({ onAllUploadSuccess, onOneUploadSuccess }: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     state.totalFiles,
-    state.upLoadErrors.length,
-    state.upLoadedFiles,
+    state.uploadErrors.length,
+    state.uploadedFiles,
     state.uploadedFilesCount,
   ]);
 
@@ -73,11 +73,11 @@ export function useStorage({ onAllUploadSuccess, onOneUploadSuccess }: Props) {
       });
       if (file?.storagePath) {
         setState((prevState) => {
-          const newUploadedFiles = [...prevState.upLoadedFiles];
+          const newUploadedFiles = [...prevState.uploadedFiles];
           newUploadedFiles[index] = file;
           return {
             ...prevState,
-            upLoadedFiles: newUploadedFiles,
+            uploadedFiles: newUploadedFiles,
             uploadedFilesCount: ++prevState.uploadedFilesCount,
           };
         });
@@ -85,11 +85,11 @@ export function useStorage({ onAllUploadSuccess, onOneUploadSuccess }: Props) {
       }
       if (!file?.file) {
         setState((prevState) => {
-          const newErrors = [...prevState.upLoadErrors];
+          const newErrors = [...prevState.uploadErrors];
           newErrors[index] = `We are unable to get the file to upload it`;
           return {
             ...prevState,
-            upLoadErrors: newErrors,
+            uploadErrors: newErrors,
           };
         });
         return;
@@ -106,32 +106,32 @@ export function useStorage({ onAllUploadSuccess, onOneUploadSuccess }: Props) {
           const newProgress =
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
           setState((prevState) => {
-            const newProgresses = [...prevState.upLoadProgresses];
+            const newProgresses = [...prevState.uploadProgresses];
             newProgresses[index] = newProgress;
             return {
               ...prevState,
-              upLoadProgresses: newProgresses,
+              uploadProgresses: newProgresses,
             };
           });
         },
         (error) => {
           setState((prevState) => {
-            const newProgresses = [...prevState.upLoadProgresses];
+            const newProgresses = [...prevState.uploadProgresses];
             newProgresses[index] = undefined;
-            const newErrors = [...prevState.upLoadErrors];
+            const newErrors = [...prevState.uploadErrors];
             newErrors[index] = `Something went wrong: ${error.message}`;
             return {
               ...prevState,
-              upLoadProgresses: newProgresses,
-              upLoadErrors: newErrors,
+              uploadProgresses: newProgresses,
+              uploadErrors: newErrors,
             };
           });
         },
         () => {
           setState((prevState) => {
-            const newProgresses = [...prevState.upLoadProgresses];
+            const newProgresses = [...prevState.uploadProgresses];
             newProgresses[index] = undefined;
-            const newUploadedFiles = [...prevState.upLoadedFiles];
+            const newUploadedFiles = [...prevState.uploadedFiles];
             newUploadedFiles[index] = {
               fileName: file.fileName,
               storagePath: uploadTask.snapshot.ref.fullPath,
@@ -140,8 +140,8 @@ export function useStorage({ onAllUploadSuccess, onOneUploadSuccess }: Props) {
 
             return {
               ...prevState,
-              upLoadedFiles: newUploadedFiles,
-              upLoadProgresses: newProgresses,
+              uploadedFiles: newUploadedFiles,
+              uploadProgresses: newProgresses,
               uploadedFilesCount: ++prevState.uploadedFilesCount,
             };
           });

@@ -8,6 +8,7 @@ import ReceiptIcon from "@mui/icons-material/Receipt";
 import { Box, Tab, Tabs } from "@mui/material";
 
 import type { Trip } from "../../type";
+import Documents from "./Documents";
 import TripInfoAndPlaces from "./TripInfoAndPlaces";
 
 interface Props {
@@ -98,7 +99,7 @@ export default function TripTabs({ trip, onUpdate }: Props) {
         <TripInfoAndPlaces trip={trip} onUpdate={onUpdate} />
       </CustomTabPanel>
       <CustomTabPanel value={selectedTab} index={1}>
-        Item Two
+        <Documents trip={trip} onUpdate={onUpdate} />
       </CustomTabPanel>
       <CustomTabPanel value={selectedTab} index={2}>
         Item Three
